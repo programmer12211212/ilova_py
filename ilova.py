@@ -1,17 +1,4 @@
-topshiriq = []
-
-def yuklash():
-    try:
-        with open("malumotlar.txt", "r", encoding="utf-8") as f:
-            for qator in f:
-                topshiriq.append(qator.strip())
-    except FileNotFoundError:
-        pass
-
-def saqlash():
-    with open("malumotlar.txt", "w", encoding="utf-8") as f:
-        for t in topshiriq:
-            f.write(t + "\n")
+import vazifa
 
 def menu():
     print("1 - Vazifa qo‘shish")
@@ -19,44 +6,22 @@ def menu():
     print("3 - Vazifani o‘chirish")
     print("0 - Chiqish")
 
-yuklash()
+vazifa.yuklash()
 
 while True:
     menu()
     tanlov = input("Tanlang: ")
 
     if tanlov == "1":
-        vazifa = input("yangi vazifa kiriting: ").strip()
-        if vazifa == "":
-            print("bo‘sh vazifa qo‘shib bo‘lmaydi")
-        else:
-            topshiriq.append(vazifa)
-            print("vazifa qo‘shildi...")
+        yangi = input("yangi vazifa kiriting: ")
+        vazifa.qoshish(yangi)
     elif tanlov == "2":
-        if not topshiriq:
-            print("xali vazifalar yoq")
-        else:
-            print("\n--- Vazifalar ro‘yxati ---")
-            for i, t in enumerate(topshiriq, start=1):
-                print(f"{i}. {t}")
+        vazifa.korish()
     elif tanlov == "3":
-        if not topshiriq:
-            print("xali vazifalar yoq, o‘chirish mumkin emas")
-        else:
-            print("\n--- Vazifalar ro‘yxati ---")
-            for i, t in enumerate(topshiriq, start=1):
-                print(f"{i}. {t}")
-            raqam = input("o‘chirmoqchi bo‘lgan vazifa raqamini kiriting: ")
-            if not raqam.isdigit():
-                print("iltimos, faqat raqam kiriting")
-            else:
-                raqam = int(raqam)
-                if 1 <= raqam <= len(topshiriq):
-                    ochirilgan = topshiriq.pop(raqam - 1)
-                    print(f"vazifa o‘chirildi: {ochirilgan}")
-                else:
-                    print("bunday raqamli vazifa yo‘q")
+        vazifa.korish()
+        raqam = input("o‘chirmoqchi bo‘lgan vazifa raqamini kiriting: ")
+        vazifa.ochirish(raqam)
     elif tanlov == "0":
-        saqlash()
+        vazifa.saqlash()
         print("dastur tugadi")
         break
